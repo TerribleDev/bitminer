@@ -1,9 +1,7 @@
 FROM ruby:alpine
 RUN apk add --update build-base
-RUN gem install bundle
+RUN gem install sinatra
 RUN gem install thin
-ADD Gemfile .
-RUN bundle
-ADD . .
-CMD ["bundle", "exec", "thin",  "start"]
+ADD app.rb /
+CMD ["ruby", "app.rb"]
 EXPOSE 80

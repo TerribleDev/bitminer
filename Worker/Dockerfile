@@ -8,5 +8,4 @@ RUN dotnet restore
 
 # copy and build everything else
 ADD . .
-RUN dotnet build -C Release
-ENTRYPOINT ["dotnet", "run", "-C", "Release"]
+ENTRYPOINT ["dotnet", "run", "-c", "Release"]

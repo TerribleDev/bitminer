@@ -1,7 +1,8 @@
 require 'sinatra'
 require 'date'
 require 'json'
-
+set :bind, '0.0.0.0'
+set :port, 80
 get '/' do
   content_type :json
   getData.to_json

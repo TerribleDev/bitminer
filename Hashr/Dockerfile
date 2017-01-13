@@ -1,13 +1,15 @@
 FROM microsoft/dotnet:latest
 
-COPY . /app
-
 WORKDIR /app
+
+ADD project.json project.json
 
 RUN ["dotnet", "restore"]
 
-RUN ["dotnet", "build"]
+ADD . .
 
-EXPOSE 5000/tcp
+RUN ["dotnet", "build", "-c", "Release"]
 
-CMD ["dotnet", "run", "--server.urls", "http://*:5000"]
+EXPOSE 80/tcp
+
+CMD ["dotnet", "run", "-c", "Release", "--server.urls", "http://*:80"]

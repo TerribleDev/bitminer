@@ -8,6 +8,7 @@ namespace Worker
 {
     public class Program
     {
+        static Random rand = new Random();
         static HttpClient httpclient = new HttpClient();
         public static void Main(string[] args)
         {
@@ -17,19 +18,20 @@ namespace Worker
         {
             while(true)
             {
-                try
-                {
+                // try
+                // {
                     var bytes = await httpclient.GetByteArrayAsync("http://gen/8");
                     var results = await httpclient.PostAsync("http://hashr/hashme",  new ByteArrayContent(bytes));
                     results.EnsureSuccessStatusCode();
                     var hashResults = await results.Content.ReadAsStringAsync();
-                    var dbResult = await httpclient.GetStringAsync($"http://store/store?dt={DateTime.Now.ToString()}");
-                    await Task.Delay(1000);
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
+                    await httpclient.GetStringAsync($"http://store/store");
+                    await Task.Delay(rand.Next(100, 1000));
+                // }
+                // catch(Exception e)
+                // {
+                //     Console.WriteLine("WORKER FAILED");
+                //     Console.WriteLine(e.Message);
+                // }
             }
         }
     }
